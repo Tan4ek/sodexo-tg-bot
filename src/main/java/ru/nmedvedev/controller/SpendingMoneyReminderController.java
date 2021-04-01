@@ -9,6 +9,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.time.LocalDate;
 
 /**
@@ -23,8 +24,9 @@ public class SpendingMoneyReminderController {
     private final SpendMoneyReminderService spendMoneyReminderService;
 
     @GET
-    public void tryForParticularDate(@QueryParam("date") String localDate) {
+    public Response tryForParticularDate(@QueryParam("date") String localDate) {
         spendMoneyReminderService.sendRemindersForDate(LocalDate.parse(localDate));
+        return Response.noContent().build();
     }
 
 }
