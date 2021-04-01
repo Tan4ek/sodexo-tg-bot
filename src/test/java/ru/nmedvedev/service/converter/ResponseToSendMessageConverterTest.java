@@ -1,5 +1,6 @@
 package ru.nmedvedev.service.converter;
 
+import com.google.gson.Gson;
 import com.pengrad.telegrambot.model.request.ReplyKeyboardMarkup;
 import com.pengrad.telegrambot.model.request.ReplyKeyboardRemove;
 import com.pengrad.telegrambot.request.SendMessage;
@@ -38,7 +39,10 @@ class ResponseToSendMessageConverterTest {
                 ));
         assertEquals(CHAT, actual.getParameters().get("chat_id"));
         assertEquals(TEXT, actual.getParameters().get("text"));
-        assertEquals(expected.getParameters().get("reply_markup").toString(), actual.getParameters().get("reply_markup").toString());
+        var gson = new Gson();
+        var replyMarkupJson = gson.toJson(actual.getParameters().get("reply_markup"));
+        var expectedReplyMarkupJson = gson.toJson(expected.getParameters().get("reply_markup"));
+        assertEquals(replyMarkupJson, expectedReplyMarkupJson);
     }
 
     @MethodSource
